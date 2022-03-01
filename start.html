@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Spanish Quiz</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="q/start.css" rel="stylesheet" type="text/css"/>
+  <script src="q/start.js" defer></script>
+</head>
+<body>
+  <div id="header">
+    <h1 id="h1Header">Spanish Quiz: Chapter</h1>
+    <p id='startTag'><b>Press enter to start</b></p>
+  </div>
+  <div class="statsbox" id="statsbox">
+    <div id="correctNum"><span><b>Correct: 0</b></span></div>
+    <div id="score"><span><b>Score: 0%</b></span></div>
+    <div id="wrongNum"><span><b>Wrong: 0</b></span></div>
+    <br><br><br><br><br> <!-- styling purposes -->
+    <div id="questionNum"><span><b>Question: 1</b></span></div>
+    <div id="questionsRemaining"><span><b>Remaining: 14</b></span></div>
+    <div id="padding"></div>
+  </div>
+  <div class="wordPromptBox" id="wordPromptBox">
+    <span id="wpbChild">lorem ipsum</span> <!-- placeholder paragraph -->
+  </div>
+  <form id="FORM" onsubmit=Client.onEnter(event)>
+    <input id="queryBox" class="field" type="text" name="word" size=60 autofocus>
+  </form>
+  <div class="wordPromptBox" id="responsebox">
+    <span id="rbChild">Default all words to their singular masculine form</span>
+  </div>
+  <div class="footer"><span>Click <a href="home.html">here</a> to return to the main page</span></div>
+  <div class="footer" id="rightFooter"><span>Click <a href="quiz.html">here</a> to choose another chapter</span></div>
+</body>
+</html>
