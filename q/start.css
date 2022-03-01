@@ -1,0 +1,78 @@
+body {
+  background: #9fa1a6;
+  font-family: Franklin Gothic Medium;
+
+  text-align: center;
+  font-weight: bold;
+}
+
+#header {
+  text-align: center;
+  font-size: 18pt;
+}
+
+.statsbox {
+  color: black;
+  background: transparent;
+  margin: auto;
+  width: 500px;
+  height: 200px;
+  border: 5px solid navy;
+  border-radius: 25px; 
+}
+
+.statsbox > div > span {
+  font-size: 15pt;
+  margin: 30px;
+}
+
+#padding {
+  width: 400px;
+}
+
+.wordPromptBox {
+  display: none;
+  font-size: 15pt;
+  border-radius: 15px; 
+  margin: 20px auto 20px auto;
+  background: transparent;
+  width: 500px;
+  height: 50px;
+  border: 5px solid navy;
+}
+
+.wordPromptBox > span {
+  line-height: 50px; /* center text */
+}
+
+#rbChild {
+  white-space: pre;
+}
+
+#responsebox {
+  border: 0px; /* responsebox inherits .wordpromptbox class; comes with border */
+}
+
+.statsbox, .wordPromptBox, #responsebox {
+  display: none;
+}
+
+.footer {
+  font-size: 18px;
+  position: fixed;
+  font-weight: bold;
+  bottom: 0;
+}
+
+#rightFooter {
+  right: 10px;
+}
+
+.field {
+  height: 50px;
+  text-align: center;
+  border: 0px;
+  font-size: 20px; 
+	font-weight: bold;
+  background: #b8c0cf;
+}
