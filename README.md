@@ -5,7 +5,7 @@ Made up of 4 sites:
 
 Home: https://spanish.mzecheru.com/
 
-Translator: https://spanish.mzecheru.com/cvrt.html
+Translator: https://spanish.mzecheru.com/translator.html
 
 Quiz: https://spanish.mzecheru.com/quiz.html
 
