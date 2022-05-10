@@ -5,7 +5,15 @@ function capitalizeFirstLetter(string) {
 window.onload = () => {
   window.quizNumber = 0;
   
-  const _chapter = window.localStorage.getItem('ch');
+  let _chapter = window.localStorage.getItem('ch');
+
+  location.hash = _chapter;
+
+  if (_chapter === null || typeof _chapter === undefined || _chapter === "") {
+    _chapter = "#ch1";
+    window.localStorage.setItem('ch', "#ch1");
+  }
+
   const chapter = _chapter.substring(3);
 
   // prevent user from changing hash
@@ -22,26 +30,32 @@ window.onload = () => {
   // "else"
   const text = document.getElementById("h1Header").innerText;
   Client.changeElementText({id: "h1Header", text: `${text} ${capitalizeFirstLetter(chapter)}`});
+
+  Server.logvisit();
 }
 
 class Server {
   static chapterBinKey = {
-    "_": "6211d38fca70c44b6e9ebc8c",
-    "1": "6219ce0f24f17933e49f7246",
-    "2": "6219ce3624f17933e49f724e",
-    "3": "6219ce4a24f17933e49f7253",
-    "4": "6219ce7724f17933e49f725e",
-    "5": "6219ce9525fb1b26b1891683",
-    "6": "6219cea624f17933e49f7269"
+    "_": "all.json",
+    "1": "chapter1.json",
+    "2": "chapter2.json",
+    "3": "chapter3.json",
+    "4": "chapter4.json",
+    "5": "chapter5.json",
+    "6": "chapter6.json",
+    "7": "chapter7.json"
   }
   
   static getKVpairsAsList (chapter, resolve) {
+    const TOAST = new bootstrap.Toast(document.getElementById("toast-xhr-fail-warning"));
+    TOAST.show();
+
     const xhr = new XMLHttpRequest();
-    const url = `https://api.jsonbin.io/v3/b/${this.chapterBinKey[chapter]}/latest`;
+    const url = `https://raw.githubusercontent.com/MihaiZecheru/jsons/main/spanishQuiz/${this.chapterBinKey[chapter]}`;
     xhr.responseType = 'json';
     xhr.onreadystatechange = () => {
       if (xhr.readyState === XMLHttpRequest.DONE) {
-        const wordBank = (xhr.response.record);
+        const wordBank = xhr.response;
         const kvPairs = Object.entries(wordBank);
         // window.localStorage.setItem('chapterBank', JSON.stringify(kvPairs))
         resolve(kvPairs);
@@ -49,8 +63,40 @@ class Server {
       }
     }
     xhr.open('GET', url);
-    xhr.setRequestHeader("X-Master-Key", "$2b$10$n6W.cXqGgN1v2iLJLZO4p.NuiBp6RPQVZJRJcr7z8uuHF3pADzgWO");
     xhr.send();
+  }
+
+  static logvisit(today = new Date()) {
+    const date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+    let visits = 0;
+    fetch('https://spanishmzecheru.fireapis.com/visits/2', {
+        method: 'GET',
+        headers: {
+            'X-API-ID': '395',
+            'X-CLIENT-TOKEN': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5IjoiZTdiNjlkMjItZDk1NC00ZDQxLTgwNzUtZTI2ZmRhOTkyYmExIiwidGVuYW50X2lkIjo1MDksImp0aV9rZXkiOiJlMWQ0NDc4Ny1iOGNmLTRlMjQtOTlmMS05Y2IyMzZjNzAxODEifQ.45OvRBu20_jHlT90tFNTBj--StROJiIn2MQ-2coc-e4',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            visits = data.visits + 1;
+
+            if (visits === 0) return; // operation failed
+
+            const body = { "visits": visits, "mostrecentvisit": date }
+
+            fetch('https://spanishmzecheru.fireapis.com/visits/2', {
+                method: 'PUT',
+                headers: {
+                    'X-API-ID': '395',
+                    'X-CLIENT-TOKEN': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5IjoiZTdiNjlkMjItZDk1NC00ZDQxLTgwNzUtZTI2ZmRhOTkyYmExIiwidGVuYW50X2lkIjo1MDksImp0aV9rZXkiOiJlMWQ0NDc4Ny1iOGNmLTRlMjQtOTlmMS05Y2IyMzZjNzAxODEifQ.45OvRBu20_jHlT90tFNTBj--StROJiIn2MQ-2coc-e4',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+                .catch(err => console.log(err));
+        })
+        .then(err => console.log(err));
   }
 }
 
@@ -102,13 +148,17 @@ class Quiz {
     
     // list will look like [[key, value], [key, value], [key, value]]
     function returnPromise() {      
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         Server.getKVpairsAsList(chapter, resolve);
       });
     }
 
     async function afterPromiseResolve () {
       const kvps = await returnPromise();
+      if (kvps === false) {
+        console.log('false')
+      }
+
       // gen 15 questions
       let _qaps = [];
       for(let i=0;i<15;i++) {
@@ -257,7 +307,7 @@ class Quiz {
     const message = `Chapter ${this.chapter} quiz is over. You got ${this.score + '%'} correct\nPress enter to take this quiz again`;
 
     // wait 3.25 seconds before replacing the message. This gives user time to see if they were right/wrong on the last question
-    sleep(3250)
+    sleep(2250)
       .then(() => {
         Quiz._updateResponseText(message);
         delete window.quiz;
