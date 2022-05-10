@@ -1,6 +1,39 @@
 body {
-  background: #9fa1a6;
-  font-family: Franklin Gothic Medium;
+  background: white;
+  font-family: "jetbrains-mono";
 }
 
-/* if u have right footer: right: 10px; */
+#m-header {
+  color: white;
+  font-size: 3em;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+  background: #477bff;
+}
+
+.m-card-wrapper {
+  position: absolute;
+  display: flex;
+  top: 25%;
+  /* border: .2rem solid black; */
+  width: 18.4rem;
+  height: 36.2rem;
+  border-radius: .5rem;
+}
+
+#m-card-one {
+  right: 59%;
+  background: #477bff;
+}
+
+#m-card-two {
+  right: 25%;
+  background: #477bff;
+}
