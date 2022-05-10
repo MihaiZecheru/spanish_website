@@ -6,9 +6,10 @@ body {
   font-weight: bold;
 }
 
-#header {
+#m-header {
   text-align: center;
   font-size: 18pt;
+  margin-top: 4.5vh;
 }
 
 .statsbox {
@@ -62,6 +63,10 @@ body {
   position: fixed;
   font-weight: bold;
   bottom: 0;
+}
+
+#left-footer {
+  left: 10px;
 }
 
 #rightFooter {
