@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Spanish Translator</title>
+    <link href="t/translator.css" rel="stylesheet" type="text/css"/>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Spanish And English</h1>
+      <p><b>Type a word or phrase in English or Spanish to get the direct translation</b></p>
+      <form id="FORM" onsubmit=Client.onEnter(event) autocomplete=off>
+        <input id="queryBox" class="field" type="text" name="word" size=60 autofocus>
+      </form>
+    </div>
+    <div id='output'><p id="placeHolderP">Default all adjectives to singular masculine, do not conjugate verbs</p></div>
+    <script src="t/translator.js"></script>
+    <div id="buttonsDiv">
+      <button tabindex='-1' class="buttons" id="adder" onclick=Buttons.addWord()>Add word/phrase</button>
+      <button tabindex='-1' class="buttons" id="rater" onclick=Buttons.rating(Server.getMostRecentQuery())>Was this translation wrong?</button>
+    </div>
+    <div class="footer"><span tabindex='-1'>Click <a href="index.html">here</a> to return to the main page</span></div>
+    <div class="footer" id="rightSide"><span tabindex='-1'>Includes all words from chapters 1-8. Click <a href="quiz.html">here</a> to quiz yourself</span></div>
+  </body>
+</html>
