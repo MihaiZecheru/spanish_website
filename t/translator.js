@@ -1,9 +1,51 @@
 window.onload = () => {
   Server.getJsonFromApi();
   Server.setMostRecentQuery('');
+
+  // when the user presses tab, set the entry box to focus
+  document.addEventListener('keypress', event => {
+    if (event.code === 'Tab') {
+      document.getElementById('queryBox').focus();
+    }
+  })
+
+  Server.logvisit();
 }
 
 class Server {
+  static logvisit(today = new Date()) {
+    const date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+    let visits = 0;
+    fetch('https://spanishmzecheru.fireapis.com/visits/1', {
+        method: 'GET',
+        headers: {
+            'X-API-ID': '395',
+            'X-CLIENT-TOKEN': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5IjoiZTdiNjlkMjItZDk1NC00ZDQxLTgwNzUtZTI2ZmRhOTkyYmExIiwidGVuYW50X2lkIjo1MDksImp0aV9rZXkiOiJlMWQ0NDc4Ny1iOGNmLTRlMjQtOTlmMS05Y2IyMzZjNzAxODEifQ.45OvRBu20_jHlT90tFNTBj--StROJiIn2MQ-2coc-e4',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            visits = data.visits + 1;
+
+            if (visits === 0) return; // operation failed
+
+            const body = { "visits": visits, "mostrecentvisit": date }
+
+            fetch('https://spanishmzecheru.fireapis.com/visits/1', {
+                method: 'PUT',
+                headers: {
+                    'X-API-ID': '395',
+                    'X-CLIENT-TOKEN': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcGlfa2V5IjoiZTdiNjlkMjItZDk1NC00ZDQxLTgwNzUtZTI2ZmRhOTkyYmExIiwidGVuYW50X2lkIjo1MDksImp0aV9rZXkiOiJlMWQ0NDc4Ny1iOGNmLTRlMjQtOTlmMS05Y2IyMzZjNzAxODEifQ.45OvRBu20_jHlT90tFNTBj--StROJiIn2MQ-2coc-e4',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+                .catch(err => console.log(err));
+        })
+        .then(err => console.log(err));
+  }
+
   static valueExistsInKey(word, translation) {
     return this.getWordBank()[word].includes(translation); // true or false
   }
@@ -39,8 +81,8 @@ class Server {
     if (document.getElementById("output").textContent === 'Please wait...') { // if the api is currently updating the json, don't proceed until it's finished
       return 'Please wait...'; // will display please wait on the output div
     }
-    if (query === '' || query === ' ') { // make function for parsing illegal words
-      return ''; // nothing will be shown to the output div
+    if (query === '' || query === ' ') {
+      return 'Default all adjectives to singular masculine, do not conjugate verbs'; // nothing will be shown to the output div
     }
 
     const wordBank = Server.getWordBank();
