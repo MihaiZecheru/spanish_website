@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Spanish Quiz</title>
-    <link href="q/quiz.css" rel="stylesheet" type="text/css"/>
+    <link href="./styles.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
     <script>
       window.onhashchange = () => {
         //location.hash === '#ch1'
         const hech = location.hash;
-        window.location = `start.html${hech}`;
+        window.location = `./take/${hech}`;
         window.localStorage.setItem("ch", hech);
       };
     </script>
@@ -35,7 +35,7 @@
       </div>
     </div>
     
-    <div class="footer"><span>Click <a href="index.html">here</a> to return to the main page</span></div>
-    <div class="footer" id="rightFooter"><span>Click <a href="translator.html">here</a> for the translator</span></div>
+    <div class="footer"><span>Click <a href="../">here</a> to return to the main page</span></div>
+    <div class="footer" id="rightFooter"><span>Click <a href="../translator/">here</a> for the translator</span></div>
   </body>
 </html>

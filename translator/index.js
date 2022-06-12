@@ -172,12 +172,22 @@ class Server {
   }
 }
 
+function replaceSpecialChars(str) {
+  const rchars = [{initial: 'ñ', replace: 'n'}, {initial: 'á', replace: 'a'}, {initial: 'é', replace: 'e'}, {initial: 'í', replace: 'i'}, {initial: 'ó', replace: 'o'}, {initial: 'ú', replace: 'u'}];
+  
+  for (let i = 0; i < rchars.length; i++) {
+    str = str.replaceAll(rchars[i].initial, rchars[i].replace);
+  }
+  
+  return str;
+}
+
 class Client {
   static onEnter(event) {
     event.preventDefault();
     //window.history.back();
 
-    const query = document.getElementById("queryBox").value.toLowerCase().trim();
+    const query = replaceSpecialChars(document.getElementById("queryBox").value.toLowerCase().trim());
 
     // clear field
     const form = document.querySelector("#FORM");
