@@ -9,7 +9,7 @@ spanish.mzecheru.com has 2 functions:
 
 ----------------------------------------------------------------
 
-Home is a page that links to the translator and quiz
+The landing page can take you to the translator and the quiz. It's at https://spanish.mzecheru.com/
 
 Translator will take an input of an english or spanish word/phrase, then convert it to the opposite language
 
